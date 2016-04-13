@@ -1,7 +1,7 @@
 <?php
-	require_once("./lib/JsonDB.class.php");
+	require_once("../lib/JsonDB.class.php");
 
-	$tableDir = "./databases/zoorallye/zoos.db";
+	$tableDir = "../databases/zoorallye/zoos.db";
 
 	$tableString = "";
 
