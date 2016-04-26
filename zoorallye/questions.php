@@ -1,10 +1,12 @@
 <?php
-	require_once("connect.php");
-	error_reporting(0);
+	require_once("connect.php"); 
+	#error_reporting(0);
 
-	if($_POST["token"] != $zoorallye_token){
-		exit('{"login":0,"errno":0,"error":"Invalid access token!"}');
-	}
+	#$headers = getallheaders();
+
+	#if($headers["token"] != $zoorallye_token){
+	#	exit('{"login":0,"errno":0,"error":"Invalid access token!"}');
+	#}
 
 	$slider = mysqli_query($db_zoo_app, "SELECT * FROM questions_slider");
 	$slider_arr = array();
@@ -16,6 +18,7 @@
 			'max' => $row["max"],
 			'step' => $row["step"],
 			'answer' => $row["answer"],
+			'enclosure' => utf8_encode($row["enclosure"]),
 			'accepted' => filter_var($row["accepted"], FILTER_VALIDATE_BOOLEAN)
 		));
 	}
@@ -29,6 +32,7 @@
 			'question' => $row["question"],
 			'answer' => $row["answer"],
 			'falseAnswers' => $row["falseAnswers"],
+			'enclosure' => utf8_encode($row["enclosure"]),
 			'accepted' => filter_var($row["accepted"], FILTER_VALIDATE_BOOLEAN)
 		));
 	}
@@ -42,6 +46,7 @@
 			'question' => $row["question"],
 			'answers' => $row["answers"],
 			'falseAnswers' => $row["falseAnswers"],
+			'enclosure' => utf8_encode($row["enclosure"]),
 			'accepted' => filter_var($row["accepted"], FILTER_VALIDATE_BOOLEAN)
 		));
 	}
@@ -54,6 +59,7 @@
 			'id' => $row["id"],
 			'question' => $row["question"],
 			'answer' => filter_var($row["answer"], FILTER_VALIDATE_BOOLEAN),
+			'enclosure' => utf8_encode($row["enclosure"]),
 			'accepted' => filter_var($row["accepted"], FILTER_VALIDATE_BOOLEAN)
 		));
 	}
@@ -66,6 +72,7 @@
 			'id' => $row["id"],
 			'question' => $row["question"],
 			'answers' => $row["answers"],
+			'enclosure' => utf8_encode($row["enclosure"]),
 			'accepted' => filter_var($row["accepted"], FILTER_VALIDATE_BOOLEAN)
 		));
 	}
@@ -78,22 +85,11 @@
 			'id' => $row["id"],
 			'question' => $row["question"],
 			'answer' => $row["answer"],
+			'enclosure' => utf8_encode($row["enclosure"]),
 			'accepted' => filter_var($row["accepted"], FILTER_VALIDATE_BOOLEAN)
 		));
 	}
 	$text_out = json_encode($text_arr);
 
-	$creative = mysqli_query($db_zoo_app, "SELECT * FROM questions_creative");
-	$creative_arr = array();
-	while($row = mysqli_fetch_assoc($creative)){
-		array_push($creative_arr, array(
-			'id' => $row["id"],
-			'task' => $row["task"],
-			'accepted' => filter_var($row["accepted"], FILTER_VALIDATE_BOOLEAN)
-		));
-	}
-	$creative_out = json_encode($creative_arr);
-
-
-	echo '{"login":1,slider":' . $slider_out . ',"radio":' . $radio_out . ',"checkbox":' . $checkbox_out . ',"trueFalse":' . $trueFalse_out . ',"sort":' . $sort_out . ',"text":' . $text_out . ',"creative":' . $creative_out . '}';
+	echo '{"login":1,"slider":' . $slider_out . ',"radio":' . $radio_out . ',"checkbox":' . $checkbox_out . ',"trueFalse":' . $trueFalse_out . ',"sort":' . $sort_out . ',"text":' . $text_out . '}';
 ?>
