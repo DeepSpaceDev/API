@@ -2,3 +2,4 @@ scripts/pw.php
 wgs/pw.php
 lib
 .idea
+envjson.json
