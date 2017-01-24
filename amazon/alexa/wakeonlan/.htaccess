@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} (linking) [NC]
+RewriteRule ^(.*)/? linking.php [NC]
+RewriteCond %{REQUEST_URI} (endpoint) [NC]
+RewriteRule ^(.*)/? endpoint.php [NC,L]
